@@ -6,19 +6,26 @@ public class SimpleStringTest {
 
 	public static void main(String[] args) {
 
-		long acc = 0;
-		for (int j = 0; j < 100; j++) {
-			long start = System.currentTimeMillis();
-			for (int i = 0; i < 3_000_000; i++) {
-				result = "";
-				result = "" + new String("aaa");
-			}
-			long timing = System.currentTimeMillis() - start;
-			System.out.println(timing);
-			acc += timing;
-		}
+		for (int k = 0; k < 2000; k++) {
 
-		System.out.printf("Average: %d", acc / 100);
+			for (int i = 0; i < 10 * k; i++) {
+				result = "" + new String("aaa").replaceAll("a", "b");
+			}
+
+			long acc = 0;
+			for (int j = 0; j < 200; j++) {
+				long start = System.nanoTime();
+				for (int i = 0; i < 500; i++) {
+					result = "";
+					result = "" + new String("aaa").replaceAll("a", "b");
+				}
+				long timing = System.nanoTime() - start;
+				// System.out.println(timing);
+				acc += timing;
+			}
+
+			System.out.printf("%d\n", acc);
+		}
 	}
 
 }
