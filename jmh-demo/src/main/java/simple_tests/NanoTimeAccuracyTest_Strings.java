@@ -1,7 +1,7 @@
 package simple_tests;
 
 /**
- * Show the limits of nanoTime() accuracy.
+ * Show the limits of nanoTime() accuracy. Note: not 100% sure how to interpret this.
  */
 public class NanoTimeAccuracyTest_Strings {
 
@@ -22,8 +22,8 @@ public class NanoTimeAccuracyTest_Strings {
 				
 				long start = System.nanoTime();
 				result = "aaa".replaceAll("a", "b");
-				long timing = System.nanoTime() - start;
-				acc += timing;
+				long duration = System.nanoTime() - start;
+				acc += duration;
 			}
 
 			System.out.printf("%d\n", acc / 200);
