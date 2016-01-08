@@ -10,7 +10,7 @@ import org.openjdk.jmh.infra.Blackhole;
 
 @BenchmarkMode(Mode.SampleTime)
 @OutputTimeUnit(TimeUnit.NANOSECONDS)    
-public class FactorialBenchmark {
+public class FactorialBenchmarks {
 	
 	private static long factorial(int n) {
 		long result = 1;
@@ -28,6 +28,16 @@ public class FactorialBenchmark {
     @Benchmark
     public void testFactorial_NoBlackhole() {
     	factorial(5_000);
+    }
+    
+    @Benchmark
+    public void testFactorial_15(Blackhole bh) {
+    	bh.consume(factorial(15));
+    }
+    
+    @Benchmark
+    public void testFactorial_1500(Blackhole bh) {
+    	bh.consume(factorial(1_500));
     }    
 
 }

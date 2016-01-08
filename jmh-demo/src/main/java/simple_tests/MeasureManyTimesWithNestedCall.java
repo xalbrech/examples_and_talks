@@ -1,10 +1,10 @@
 package simple_tests;
 
-public class MeasureManyTimesWithWarmup {
+public class MeasureManyTimesWithNestedCall {
 	
-	private static final int MEASUREMENTS = 400000;
+	private static final int MEASUREMENTS = 200;
 	public static long result;
-	private static final int WARMUP = 200;
+	private static final int WARMUP = 20_000;
 	
 	private static long factorial(int n) {
 		long result = 1;
@@ -13,16 +13,20 @@ public class MeasureManyTimesWithWarmup {
 		}
 		return result;
 	}
+	
+	private static void callFactorial() {
+		factorial(5_000);
+	}
 
 	public static void main(String[] args) {
 		
 		for (int i = 0; i < WARMUP; i++) {
-			result = factorial(5_000);
+			callFactorial();
 		}	
 
 		for (int i = 0; i < MEASUREMENTS; i++) {
 			long start = System.nanoTime();
-			result = factorial(5_000);
+			callFactorial();
 			long duration = System.nanoTime() - start;
 			System.out.printf("%d\n", duration);
 		}	

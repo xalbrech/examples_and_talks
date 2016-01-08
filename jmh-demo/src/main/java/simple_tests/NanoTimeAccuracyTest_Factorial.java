@@ -5,7 +5,9 @@ package simple_tests;
  */
 public class NanoTimeAccuracyTest_Factorial {
 
-	static final int MEASUREMENTS = 200;
+	private static final int MEASUREMENTS = 200;
+	private static final int WARMUP = 200;
+	
 	public static long result;
 
 	private static long factorial(int n) {
@@ -17,13 +19,15 @@ public class NanoTimeAccuracyTest_Factorial {
 	}
 
 	public static void main(String[] args) {
+				
+		for (int i = 0; i < WARMUP; i++) {
+			long result = factorial(5_000);
+		}			
 
 		for (int j = 0; j < MEASUREMENTS; j++) {
 
-			result = factorial(150 * j);
-
 			long start = System.nanoTime();
-			result = factorial(5_000);
+			long result = factorial(1500);
 			long duration = System.nanoTime() - start;
 
 			System.out.printf("%d\n", duration);

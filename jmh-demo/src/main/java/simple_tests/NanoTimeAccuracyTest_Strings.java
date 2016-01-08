@@ -7,6 +7,15 @@ public class NanoTimeAccuracyTest_Strings {
 
 	static final int MEASUREMENTS = 200;
 	public static String result;
+	public static long facResult;
+	
+	private static long factorial(int n) {
+		long result = 1;
+		for (int i = 1; i <= n; i++) {
+			result = result * i;
+		}
+		return result;
+	}	
 
 	public static void main(String[] args) {
 
@@ -17,13 +26,13 @@ public class NanoTimeAccuracyTest_Strings {
 				
 				// add a variable delay (depends on the measurement iteration)
 				for (int i = 0; i < MEASUREMENTS * (k % 40); i++) {
-					result = "aaa".replaceAll("a", "b");
+					facResult = factorial(500);
 				}
 				
 				long start = System.nanoTime();
-				result = "aaa".replaceAll("a", "b");
-				long timing = System.nanoTime() - start;
-				acc += timing;
+				facResult = factorial(500);
+				long duration = System.nanoTime() - start;
+				acc += duration;
 			}
 
 			System.out.printf("%d\n", acc / 200);
