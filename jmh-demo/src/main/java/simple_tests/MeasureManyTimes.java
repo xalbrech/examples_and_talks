@@ -9,7 +9,7 @@ public class MeasureManyTimes {
 
 		for (int i = 0; i < MEASUREMENTS; i++) {
 			long start = System.nanoTime();
-			result = ClassUnderTest.factorial(5000);
+			result = ClassUnderTest.factorial(1_000);
 			long duration = System.nanoTime() - start;
 			System.out.printf("%d\n", duration);
 		}	
