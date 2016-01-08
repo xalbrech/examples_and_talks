@@ -1,21 +1,12 @@
 package simple_tests;
 
 /**
- * Show the limits of nanoTime() accuracy.
+ * Show the limits of nanoTime() accuracy. Note: not 100% sure how to interpret this.
  */
 public class NanoTimeAccuracyTest_Strings {
 
 	static final int MEASUREMENTS = 200;
 	public static String result;
-	public static long facResult;
-	
-	private static long factorial(int n) {
-		long result = 1;
-		for (int i = 1; i <= n; i++) {
-			result = result * i;
-		}
-		return result;
-	}	
 
 	public static void main(String[] args) {
 
@@ -26,11 +17,11 @@ public class NanoTimeAccuracyTest_Strings {
 				
 				// add a variable delay (depends on the measurement iteration)
 				for (int i = 0; i < MEASUREMENTS * (k % 40); i++) {
-					facResult = factorial(500);
+					result = "aaa".replaceAll("a", "b");
 				}
 				
 				long start = System.nanoTime();
-				facResult = factorial(500);
+				result = "aaa".replaceAll("a", "b");
 				long duration = System.nanoTime() - start;
 				acc += duration;
 			}

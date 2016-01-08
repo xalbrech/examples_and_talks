@@ -1,21 +1,12 @@
 package simple_tests;
 
-public class MeasureManyTimesWithNestedCall {
+public class MeasureManyTimesWithWarmupAndNestedCall {
 	
 	private static final int MEASUREMENTS = 200;
-	public static long result;
 	private static final int WARMUP = 20_000;
-	
-	private static long factorial(int n) {
-		long result = 1;
-		for(int i=1; i<=n; i++) {
-			result = result * i;
-		}
-		return result;
-	}
-	
+
 	private static void callFactorial() {
-		factorial(5_000);
+		ClassUnderTest.factorial(5_000);
 	}
 
 	public static void main(String[] args) {
