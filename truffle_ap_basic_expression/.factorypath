@@ -1,5 +1,0 @@
-<factorypath>
-    <factorypathentry kind="PLUGIN" id="org.eclipse.jst.ws.annotations.core" enabled="true" runInBatchMode="false"/>
-    <factorypathentry kind="EXTJAR" id="/home/david/workspace/graal_vm_preview/GraalVM-0.9/jre/lib/truffle/truffle-api.jar" enabled="true" runInBatchMode="false"/>
-    <factorypathentry kind="EXTJAR" id="/home/david/workspace/graal_vm_preview/GraalVM-0.9/lib/truffle-dsl-processor.jar" enabled="true" runInBatchMode="false"/>
-</factorypath>
