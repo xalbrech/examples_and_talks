@@ -19,7 +19,7 @@
 package fjp_futures_talk;
 
 /**
- * Search for a maximum value in a tree. 
+ * Search for a maximum value in a tree. Single-threaded version, for reference purposes only. 
  *  
  */
 public class ForkJoinPoolMaxSingleThreadedExample {

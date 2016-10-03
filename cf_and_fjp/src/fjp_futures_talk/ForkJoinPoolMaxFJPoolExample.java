@@ -26,7 +26,7 @@ import javax.naming.NoPermissionException;
 
 /**
  * Search for a maximum value in a tree. 
- * Asynchronously using FJ pool.
+ * Asynchronous version that uses FJ tasks and fork/join to parallelize the processing.
  *
  */
 public class ForkJoinPoolMaxFJPoolExample {
@@ -110,6 +110,9 @@ public class ForkJoinPoolMaxFJPoolExample {
 		@Override
 		public void visitBranch(Branch b) {
 			RecursiveAction leftAction = new RecursiveAction() {
+				
+				private static final long serialVersionUID = 1L;
+				
 				@Override
 				protected void compute() {
 					b.leftNode.accept(MaxVisitor.this);					
@@ -118,10 +121,12 @@ public class ForkJoinPoolMaxFJPoolExample {
 			leftAction.fork();
 			
 			RecursiveAction rightAction = new RecursiveAction() {
+				
+				private static final long serialVersionUID = 1L;
+				
 				@Override
 				protected void compute() {
 					b.rightNode.accept(MaxVisitor.this);	
-					throw new NullPointerException();
 				}
 			};			
 			rightAction.fork();
@@ -139,18 +144,20 @@ public class ForkJoinPoolMaxFJPoolExample {
 		
 		long start = System.nanoTime();
 		
-		ForkJoinPool pool = new ForkJoinPool().commonPool();
+		ForkJoinPool pool = ForkJoinPool.commonPool();
 		
 		MaxVisitor v = new MaxVisitor();
 		
 		pool.submit(new RecursiveAction() {
 
+			private static final long serialVersionUID = 1L;
+
 			@Override
-			protected void compute() {				
-				v.visitBranch(THE_TREE);
+			protected void compute() {
+				THE_TREE.accept(v);				
 			}
 			
-		});
+		}).join();
 
 		System.out.println("The maximum is: "+ v.getMax());		
 		System.out.println(String.format("Search with FJ Pool in: %d ms, FJP size: %d", (System.nanoTime() - start) / 1_000_000, pool.getPoolSize()));

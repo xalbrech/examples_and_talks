@@ -115,13 +115,17 @@ public class CompletableFutureExamples {
 		
 	}		
 		
+	/* Shows the use of thenRun in conjunction with an exception thrown in preceeding CF code. 
+	 * Result: the exception is just "eaten" by the CF framework. It is not propagated to the client thread (that would be understandable), 
+	 * but it is also not processed by thread default exception handler, though we have set one.   
+	 */  
 	@Test public void showThenRun() {
 		
 		ForkJoinPool pool = new ForkJoinPool(1, ForkJoinPool.defaultForkJoinWorkerThreadFactory, new UncaughtExceptionHandler() {
 			
 			@Override
 			public void uncaughtException(Thread t, Throwable e) {
-				System.out.println(e);
+				e.printStackTrace();
 			}
 		}, false);
 		
@@ -138,7 +142,7 @@ public class CompletableFutureExamples {
 		sleep(100);
 	}
 	
-	// Better to use whenComplete instead of thenRun
+	/* Because of the exception problem above, it is better to use whenComplete instead of thenRun */
 	@Test public void showWhenComplete() {
 		
 		
