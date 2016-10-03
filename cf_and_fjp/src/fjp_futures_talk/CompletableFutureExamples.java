@@ -162,7 +162,9 @@ public class CompletableFutureExamples {
 		sleep(100);
 	}			
 	
-	// Determining the thread used to execute a chained CF can be tricky 
+	// Determining the thread used to execute a chained CF can be tricky. Try to uncomment the sleep and see the change in threads that are used.
+	// It is important to keep in mind that depending on the timing, the client thread can also be used to execute a CF. 
+	// To make sure that certain executor is used, call then*Async() methods. 
 	@Test public void showThreadsUsed() {
 		
 		System.out.println("Main test thread: " + Thread.currentThread().getName());
@@ -173,7 +175,7 @@ public class CompletableFutureExamples {
 			return 1;
 		});
 		
-		//sleep(500);
+		// sleep(500);
 		
 		cf.thenApply(n -> {
 					System.out.println("Thread used to complete CF: " + Thread.currentThread().getName());
