@@ -115,8 +115,8 @@ public class ForkJoinPoolMaxSingleThreadedExample {
 		MaxVisitor v = new MaxVisitor();
 		THE_TREE.accept(v);
 		
-		System.out.println("The maximum is: "+ v.getMax());		
-		System.out.println(String.format("Single threaded search completed in: %d", (System.nanoTime() - start) / 1_000_000));
+		System.out.printf("The maximum is: %f\n", v.getMax());		
+		System.out.printf("Single threaded search completed in: %d\n", (System.nanoTime() - start) / 1_000_000);
 	}
 
 }

@@ -159,8 +159,8 @@ public class ForkJoinPoolMaxFJPoolExample {
 			
 		}).join();
 
-		System.out.println("The maximum is: "+ v.getMax());		
-		System.out.println(String.format("Search with FJ Pool in: %d ms, FJP size: %d", (System.nanoTime() - start) / 1_000_000, pool.getPoolSize()));
+		System.out.printf("The maximum is: %f\n", v.getMax());		
+		System.out.printf("Search with FJ Pool in: %d ms, FJP size: %d\n", (System.nanoTime() - start) / 1_000_000, pool.getPoolSize());
 	}
 
 }
