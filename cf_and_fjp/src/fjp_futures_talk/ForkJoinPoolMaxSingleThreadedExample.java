@@ -24,22 +24,22 @@ package fjp_futures_talk;
  */
 public class ForkJoinPoolMaxSingleThreadedExample {
 	
-	static void sleep(int millis) {
+	private static void sleep(int millis) {
 		try {
 			Thread.sleep(millis);
 		} catch (InterruptedException e) { }
 	}
 	
-	interface Node {
+	private interface Node {
 		public void accept(Visitor v);
 	}
 	
-	interface Visitor {
+	private interface Visitor {
 		void visitLeaf(Leaf l);
 		void visitBranch(Branch b);
 	}
 	
-	static class Leaf implements Node {
+	private static class Leaf implements Node {
 		private double value;
 
 		public Leaf(double value) {
@@ -59,7 +59,7 @@ public class ForkJoinPoolMaxSingleThreadedExample {
 		
 	}
 	
-	static class Branch implements Node {
+	private static class Branch implements Node {
 
 		Node leftNode, rightNode;
 
@@ -76,7 +76,7 @@ public class ForkJoinPoolMaxSingleThreadedExample {
 		
 	}
 	
-	static class MaxVisitor implements Visitor {
+	private static class MaxVisitor implements Visitor {
 		double max = Double.NEGATIVE_INFINITY;
 		
 		@Override
@@ -96,24 +96,23 @@ public class ForkJoinPoolMaxSingleThreadedExample {
 		}
 	}
 	
-	static Branch THE_TREE = new Branch(  
+	public static void main(String[] args) {
+		
+		Node theTreeRoot = new Branch(  
 				new Branch(new Leaf(1D), 
 						new Branch(new Leaf(100D), 
 								new Branch(new Leaf(200D), new Leaf(200.3D)))),
 				new Branch(new Leaf(3D), 
-						   new Branch(new Leaf(4D), 
+						new Branch(new Leaf(4D), 
 								new Branch(new Leaf(300D), 
 										new Branch(new Leaf(351D), new Leaf(490.8D))))
-						  )
-			);
-			
-	
-	public static void main(String[] args) {	
+						)
+				);		
 		
 		long start = System.nanoTime();
 		
 		MaxVisitor v = new MaxVisitor();
-		THE_TREE.accept(v);
+		theTreeRoot.accept(v);
 		
 		System.out.printf("The maximum is: %f\n", v.getMax());		
 		System.out.printf("Single threaded search completed in: %d\n", (System.nanoTime() - start) / 1_000_000);

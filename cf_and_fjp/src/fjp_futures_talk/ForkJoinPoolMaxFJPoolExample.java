@@ -31,22 +31,22 @@ import javax.naming.NoPermissionException;
  */
 public class ForkJoinPoolMaxFJPoolExample {
 	
-	static void sleep(int millis) {
+	private static void sleep(int millis) {
 		try {
 			Thread.sleep(millis);
 		} catch (InterruptedException e) { }
 	}	
 	
-	interface Node {
+	private interface Node {
 		public void accept(Visitor v);
 	}
 	
-	interface Visitor {
+	private interface Visitor {
 		void visitLeaf(Leaf l);
 		void visitBranch(Branch b);
 	}
 	
-	static class Leaf implements Node {
+	private static class Leaf implements Node {
 		private double value;
 
 		public Leaf(double value) {
@@ -66,7 +66,7 @@ public class ForkJoinPoolMaxFJPoolExample {
 		
 	}
 	
-	static class Branch implements Node {
+	private static class Branch implements Node {
 
 		Node leftNode, rightNode;
 
@@ -83,19 +83,7 @@ public class ForkJoinPoolMaxFJPoolExample {
 		
 	}
 	
-	static Branch THE_TREE = new Branch(  
-			new Branch(new Leaf(1D), 
-					new Branch(new Leaf(100D), 
-							new Branch(new Leaf(200D), new Leaf(200.3D)))),
-			new Branch(new Leaf(3D), 
-					   new Branch(new Leaf(4D), 
-							new Branch(new Leaf(300D), 
-									new Branch(new Leaf(351D), new Leaf(490.8D))))
-					  )
-		);
-	
-	
-	static class MaxVisitor implements Visitor {
+	private static class MaxVisitor implements Visitor {
 
 		AtomicReference<Double> max = new AtomicReference<>(Double.NEGATIVE_INFINITY);
 		
@@ -142,6 +130,17 @@ public class ForkJoinPoolMaxFJPoolExample {
 	
 	public static void main(String[] args) {
 		
+		Node theTreeRoot = new Branch(  
+				new Branch(new Leaf(1D), 
+						new Branch(new Leaf(100D), 
+								new Branch(new Leaf(200D), new Leaf(200.3D)))),
+				new Branch(new Leaf(3D), 
+						new Branch(new Leaf(4D), 
+								new Branch(new Leaf(300D), 
+										new Branch(new Leaf(351D), new Leaf(490.8D))))
+						)
+				);
+		
 		long start = System.nanoTime();
 		
 		ForkJoinPool pool = ForkJoinPool.commonPool();
@@ -154,7 +153,7 @@ public class ForkJoinPoolMaxFJPoolExample {
 
 			@Override
 			protected void compute() {
-				THE_TREE.accept(v);				
+				theTreeRoot.accept(v);				
 			}
 			
 		}).join();
